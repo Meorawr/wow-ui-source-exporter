@@ -1,0 +1,25 @@
+---
+name: WoW UI Source Exporter
+description: Exports UI source files for the current World of Warcraft build on the CDN
+
+inputs:
+  product:
+    description: Product to export UI source files for
+    required: true
+
+  path:
+    description: Output directory where files will be exported
+    required: true
+    default: .
+
+  region:
+    description: CDN region to query
+    required: true
+    default: us
+
+runs:
+  using: composite
+  steps:
+    - name: Export UI source files
+      run: pwsh "$($env:GITHUB_ACTION_PATH)/WowUiSourceExporter.ps1" -Product ${{ inputs.product }} -Region ${{ inputs.region }} -OutputDirectory ${{ inputs.path }} -ExportVersion
+      shell: pwsh
